@@ -54,7 +54,10 @@ COPY run.sh /run.sh
 RUN chmod u+x /run.sh
 
 # default publichost, you'll need to set this for passive support
-ENV PUBLICHOST ftp.foo.com
+ENV MAX_CLIENT_NUMBER 50
+ENV MAX_CLIENTperIP 10
+ENV SERVICE_PORT 21
+ENV PASSIVE_PORTRANGE 30000:30009
 
 # couple available volumes you may want to use
 VOLUME ["/home/ftpusers", "/etc/pure-ftpd/passwd"]
@@ -65,7 +68,6 @@ RUN cd /etc/pure-ftpd/conf/ && \
 	echo "yes" | tee AntiWarez ChrootEveryone CreateHomeDir CustomerProof Daemonize DontResolve IPV4Only NoAnonymous NoChmod NoRename ProhibitDotFilesRead ProhibitDotFilesWrite && \
 	echo "no" | tee AllowAnonymousFXP AllowDotFiles AllowUserFXP AnonymousCanCreateDirs AnonymousCantUpload AnonymousOnly AutoRename BrokenClientsCompatibility CallUploadScript DisplayDotFiles IPV6Only KeepAllFiles LogPID NATmode PAMAuthentication UnixAuthentication VerboseLog
 
-
 # startup
-CMD /run.sh -c 50 -C 10 -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R -P $PUBLICHOST -p 30000:30009
+CMD /run.sh --bind $SERVICE_PORT -p $PASSIVE_PORTRANGE -c $MAX_CLIENT_NUMBER -C $MAX_CLIENTperIP -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R
 
