@@ -17,6 +17,21 @@ then
     pure-pw mkdb /etc/pure-ftpd/pureftpd.pdb -f /etc/pure-ftpd/passwd/pureftpd.passwd
 fi
 
+# Generate TLS certification to Volume if pure-ftpd.pem is empty or flag --openssl-renew is set
+if [[ "$PURE_FTPD_FLAGS" == *"--openssl-renew"* ]] || [ ! -e /home/ftpusers/.ftpssl/pure-ftpd.pem ]
+then
+    echo "Generate TLS"
+    mkdir -p /home/ftpusers/.ftpssl
+    openssl dhparam -out /home/ftpusers/.ftpssl/pure-ftpd-dhparams.pem 2048
+    openssl req -x509 -nodes -newkey rsa:2048 -sha256 -subj $OPENSSL_SUBJ \
+        -days 36500 -keyout /home/ftpusers/.ftpssl/pure-ftpd.pem \
+        -out /home/ftpusers/.ftpssl/pure-ftpd.pem
+fi
+
+# Create symbolic link to TLS certification in Volume
+rm -rf /etc/ssl/private
+ln -s /home/ftpusers/.ftpssl /etc/ssl/private
+
 # detect if using TLS (from volumed in file) but no flag set, set one
 if [ -e /etc/ssl/private/pure-ftpd.pem ] && [[ "$PURE_FTPD_FLAGS" != *"--tls"* ]]
 then
