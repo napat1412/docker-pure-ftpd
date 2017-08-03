@@ -29,7 +29,7 @@ then
 fi
 
 # Create symbolic link to TLS certification in Volume
-rm -rf /etc/ssl/private
+cp /home/ftpusers/.ftpssl/*.pem /etc/ssl/private
 ln -s /home/ftpusers/.ftpssl /etc/ssl/private
 
 # detect if using TLS (from volumed in file) but no flag set, set one
