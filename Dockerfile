@@ -66,8 +66,8 @@ VOLUME ["/home/ftpusers", "/etc/pure-ftpd/passwd"]
 
 # Secure defaults, ref: https://github.com/stilliard/docker-pure-ftpd/issues/10
 RUN cd /etc/pure-ftpd/conf/ && \
-	echo "yes" | tee AntiWarez ChrootEveryone CreateHomeDir CustomerProof Daemonize DontResolve IPV4Only NoAnonymous NoChmod NoRename ProhibitDotFilesRead ProhibitDotFilesWrite && \
-	echo "no" | tee AllowAnonymousFXP AllowDotFiles AllowUserFXP AnonymousCanCreateDirs AnonymousCantUpload AnonymousOnly AutoRename BrokenClientsCompatibility CallUploadScript DisplayDotFiles IPV6Only KeepAllFiles LogPID NATmode PAMAuthentication UnixAuthentication VerboseLog
+	echo "yes" | tee AntiWarez ChrootEveryone CreateHomeDir CustomerProof Daemonize DontResolve IPV4Only NoAnonymous NoChmod NoRename ProhibitDotFilesRead ProhibitDotFilesWrite LogPID NATmode && \
+	echo "no" | tee AllowAnonymousFXP AllowDotFiles AllowUserFXP AnonymousCanCreateDirs AnonymousCantUpload AnonymousOnly AutoRename BrokenClientsCompatibility CallUploadScript DisplayDotFiles IPV6Only KeepAllFiles PAMAuthentication UnixAuthentication VerboseLog
 
 # startup
 CMD /run.sh --bind $SERVICE_PORT -p $PASSIVE_PORTRANGE -c $MAX_CLIENT_NUMBER -C $MAX_CLIENTperIP -l puredb:/etc/pure-ftpd/pureftpd.pdb -E -j -R
