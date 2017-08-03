@@ -58,6 +58,7 @@ ENV MAX_CLIENT_NUMBER 50
 ENV MAX_CLIENTperIP 10
 ENV SERVICE_PORT 21
 ENV PASSIVE_PORTRANGE 30000:30009
+ENV OPENSSL_SUBJ "/C=TH"
 
 # couple available volumes you may want to use
 VOLUME ["/home/ftpusers", "/etc/pure-ftpd/passwd"]
