@@ -2,7 +2,7 @@
 Docker image to run pure-ftpd server which support auto generate TLS, self-management user and PASSIVE mode
 
 ## ENV
-  $ADDED_FLAGS  "--tls=2 --peruserlimits=4:1"
+  $ADDED_FLAGS  "--tls=2 --peruserlimits=4:0"
   
   $MAX_CLIENT_NUMBER  Max number of client. default value is 50.
   
@@ -17,8 +17,9 @@ Docker image to run pure-ftpd server which support auto generate TLS, self-manag
 ## Config File
   $ cat /etc/pure-ftpd/passwd/pureftpd.passwd
   bob:$1$EU8HZbx0$Oy1VRfqaTWcAD08mxj5ar0:1000:1000::/home/ftpusers/bob/./::::::::::::
-
-*note: user can generate user & password for pure-ftpd with command*
+  
+  
+  *note: user can generate user & password for pure-ftpd with command*
   
   $ FTPUSER=bob
   
@@ -41,8 +42,9 @@ $ docker run -d --name ftpd -p 21:21 -p 30000-30009:30000-30009 \
   local/docker-pure-ftpd
 ```
 
+
+
 ------
-======
 
 ## Original README.md
 Docker Pure-ftpd Server
