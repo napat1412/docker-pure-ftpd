@@ -24,7 +24,7 @@ $ docker build -t local/docker-pure-ftpd  .
 ```
 
 ## Run with ENV
-In example, you can run start with simple docker by using this command
+In example, you can run docker by using this command
 ```
 $ docker run -d --name ftpd -p 21:21 -p 30000-30009:30000-30009 \
   --net=host -v /etc/pure-ftpd/passwd:/etc/pure-ftpd/passwd \
@@ -34,9 +34,9 @@ $ docker run -d --name ftpd -p 21:21 -p 30000-30009:30000-30009 \
   local/docker-pure-ftpd
 ```
 
+------
+======
 
-
-============================
 ## Original README.md
 Docker Pure-ftpd Server
 
