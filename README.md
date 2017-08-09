@@ -10,16 +10,18 @@ Docker image to run pure-ftpd server which support auto generate TLS, self-manag
   $PASSIVE_PORTRANGE  FTP passsive port range (e.g. 30000:30009)
   $OPENSSL_SUBJ       Openssl subject (e.g. "/C=TH/ST=Phathum tani/L=Klongluang/O=Klongnoy")
 ```
+
 ## Config File
+```
   $ cat /etc/pure-ftpd/passwd/pureftpd.passwd
   bob:$1$EU8HZbx0$Oy1VRfqaTWcAD08mxj5ar0:1000:1000::/home/ftpusers/bob/./::::::::::::
-  
+```  
   
   *note: user can generate user & password for pure-ftpd with command*
-  
-  $ FTPUSER=bob
-  
+```
+  $ FTPUSER=bob  
   $ echo "$FTPUSER:$(openssl passwd -1):1000:1000::/home/ftpusers/$FTPUSER/./::::::::::::"
+```
 
 ## Build
 Build with the following command.
