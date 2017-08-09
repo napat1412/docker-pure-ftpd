@@ -1,6 +1,45 @@
+# docker-pure-ftpd
+Docker image to run pure-ftpd server which support auto generate TLS, self-management user and PASSIVE mode
 
-Docker Pure-ftpd Server
+## ENV
+$ADDED_FLAGS  "--tls=2 --peruserlimits=4:1"
+$MAX_CLIENT_NUMBER  Max number of client. default value is 50.
+$MAX_CLIENTperIP    Max number of client with same IP address. Default value is 10.
+$SERVICE_PORT       FTP service port (e.g. 21)
+$PASSIVE_PORTRANGE  FTP passsive port range (e.g. 30000:30009)
+$OPENSSL_SUBJ       Openssl subject (e.g. "/C=TH/ST=Phathum tani/L=Klongluang/O=Klongnoy")
+
+## Config File
+$ cat /etc/pure-ftpd/passwd/pureftpd.passwd
+bob:$1$EU8HZbx0$Oy1VRfqaTWcAD08mxj5ar0:1000:1000::/home/ftpusers/bob/./::::::::::::
+
+*note: user can generate user & password for pure-ftpd with command
+$ FTPUSER=bob
+$ echo "$FTPUSER:$(openssl passwd -1):1000:1000::/home/ftpusers/$FTPUSER/./::::::::::::"
+
+## Build
+Build with the following command.
+```bash
+$ docker build -t local/docker-pure-ftpd  .
+```
+
+## Run with ENV
+In example, you can run start with simple docker by using this command
+```
+$ docker run -d --name ftpd -p 21:21 -p 30000-30009:30000-30009 \
+  --net=host -v /etc/pure-ftpd/passwd:/etc/pure-ftpd/passwd \
+  -e "ADDED_FLAGS=--tls=2" \
+  -e "MAX_CLIENT_NUMBER=50" -e "MAX_CLIENTperIP=10" -e "SERVICE_PORT=21" \
+  -e "PASSIVE_PORTRANGE=30000:30009" -e "OPENSSL_SUBJ=/C=TH" \
+  local/docker-pure-ftpd
+```
+
+
+
 ============================
+## Original README.md
+Docker Pure-ftpd Server
+
 
 Pull down with docker:
 ```bash
